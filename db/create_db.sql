@@ -1,7 +1,7 @@
-CREATE DATABASE [MusicCatalog]
+CREATE DATABASE [AlbumCatalog]
 GO
 
-USE [MusicCatalog];
+USE [AlbumCatalog];
 GO
 
 CREATE TABLE Album (
