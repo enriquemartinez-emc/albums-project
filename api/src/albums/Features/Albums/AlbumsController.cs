@@ -22,28 +22,16 @@ namespace albums.Features.Albums
             return _mediator.Send(new List.Query(), cancellationToken);
         }
 
-         [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<AlbumsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public Task<AlbumResponse> Create([FromBody] Create.Command command, CancellationToken cancellationToken)
         {
+            return _mediator.Send(command, cancellationToken);
         }
 
-        // PUT api/<AlbumsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+         public Task<AlbumResponse> Edit(Guid id, [FromBody] Edit.Model model, CancellationToken cancellationToken)
         {
-        }
-
-        // DELETE api/<AlbumsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return _mediator.Send(new Edit.Command(model, id), cancellationToken);
         }
     }
 }

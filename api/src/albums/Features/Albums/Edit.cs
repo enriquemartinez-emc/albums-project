@@ -8,22 +8,22 @@ namespace albums.Features.Albums
 {
     public class Edit
     {
-        public record Command : IRequest<AlbumResponse>
+        public class AlbumData
         {
-            public Guid Id { get; init; }
-            public string? Name { get; init; }
-            public string? Description { get; init; }
-            public string? ArtistName { get; init; }
-            public string? CoverUrl { get; init; }
+            public string? Name { get; set; }
+            public string? Description { get; set; }
+            public string? ArtistName { get; set; }
+            public string? CoverUrl { get; set; }
         }
 
-        public class Validator : AbstractValidator<Command>
+        public record Command(Model Model, Guid id) : IRequest<AlbumResponse>;
+        public record Model(AlbumData Album);
+
+        public class CommandValidator : AbstractValidator<Command>
         {
-            public Validator()
+            public CommandValidator()
             {
-                RuleFor(m => m.Name).NotNull().Length(1, 50);
-                RuleFor(m => m.Description).NotNull().Length(1, 50);
-                RuleFor(m => m.ArtistName).NotNull();
+                RuleFor(x => x.Model.Album).NotNull();
             }
         }
 
@@ -38,17 +38,17 @@ namespace albums.Features.Albums
 
             public async Task<AlbumResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var album = await _context.Albums.FindAsync(request.Id, cancellationToken);
+                var album = await _context.Albums.FindAsync(request.id, cancellationToken);
 
                 if (album == null)
                 {
                     throw new Exception("Album Not Found");
                 }
 
-                album.Name = request.Name;
-                album.Description = request.Description;
-                album.ArtistName = request.ArtistName;
-                album.CoverUrl = request.CoverUrl;
+                album.Name = request.Model.Album.Name;
+                album.Description = request.Model.Album.Description;
+                album.ArtistName = request.Model.Album.ArtistName;
+                album.CoverUrl = request.Model.Album.CoverUrl;
 
                 await _context.SaveChangesAsync(cancellationToken);
 
