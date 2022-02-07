@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import useAlbums from "../hooks/useAlbums";
 import { IAlbum } from "../types";
 
-export default function AlbumDetails() {
-  const { selectedAlbum, addAlbum, editAlbum } = useAlbums(); 
+interface AlbumDetailsProps {
+  selectedAlbum: IAlbum;
+  addAlbum: (album: IAlbum) => void;
+  editAlbum: (album: IAlbum) => void;
+}
+
+export default function AlbumDetails({
+  selectedAlbum,
+  addAlbum,
+  editAlbum,
+}: AlbumDetailsProps) {
   const [album, setAlbum] = useState<IAlbum>({ ...selectedAlbum });
 
   function handleChange(
@@ -31,7 +39,6 @@ export default function AlbumDetails() {
         <Input
           id="name"
           name="name"
-          placeholder="Album name"
           type="text"
           value={album?.name}
           onChange={handleChange}
@@ -43,7 +50,6 @@ export default function AlbumDetails() {
         <Input
           id="artistName"
           name="artistName"
-          placeholder="Artist name"
           type="text"
           value={album?.artistName}
           onChange={handleChange}
@@ -66,14 +72,13 @@ export default function AlbumDetails() {
         <Input
           id="coverUrl"
           name="coverUrl"
-          placeholder="Cover Url"
           type="text"
           value={album?.coverUrl}
           onChange={handleChange}
         />
       </FormGroup>
 
-      <Button>{selectedAlbum.id ? "Edit Album" : "Add Album"}</Button>
+      <Button>{album.id ? "Edit Album" : "Add Album"}</Button>
     </Form>
   );
 }

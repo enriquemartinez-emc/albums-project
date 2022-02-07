@@ -1,15 +1,19 @@
-import { useEffect } from "react";
 import { Button } from "reactstrap";
-import useAlbums from "../hooks/useAlbums";
 import { IAlbum } from "../types";
 
-export default function AlbumsList() {
-  const { albums, loading, error, fetchAlbums, selectAlbum } = useAlbums();
+interface AlbumsListProps {
+  loading: boolean;
+  error: unknown;
+  albums: IAlbum[];
+  selectAlbum: (album: IAlbum) => void;
+}
 
-  useEffect(() => {
-    fetchAlbums();
-  }, []);
-
+export default function AlbumsList({
+  loading,
+  error,
+  selectAlbum,
+  albums,
+}: AlbumsListProps) {
   if (loading) return <p>Loading albums...</p>;
   if (error) return <p>Unable to display albums.</p>;
 
@@ -21,6 +25,7 @@ export default function AlbumsList() {
           <th>Album Name</th>
           <th>Artist Name</th>
           <th>Description</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +37,7 @@ export default function AlbumsList() {
             <td>{album.description}</td>
             <td>
               <Button color="primary" onClick={() => selectAlbum(album)}>
-                Edit Album
+                <i className="bi-pencil-square"></i>
               </Button>
             </td>
           </tr>
