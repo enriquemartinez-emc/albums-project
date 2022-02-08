@@ -14,6 +14,6 @@ namespace albums.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Album>().ToTable("Album");
-         }
+        }
     }
 }

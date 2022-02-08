@@ -13,8 +13,8 @@ const create = (data: IAlbum) => {
   return http.post("/albums", { data });
 };
 
-const update = (id: string, data: IAlbum) => {
-  return http.put(`/albums/${id}`, { data });
+const update = (id: string, album: IAlbum) => {
+  return http.put(`/albums/${id}`, { album });
 };
 
 const remove = (id: string) => {

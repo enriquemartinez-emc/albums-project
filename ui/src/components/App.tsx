@@ -24,8 +24,7 @@ export default function App() {
   return (
     <Layout>
       <Row>
-        <Col>
-          {" "}
+        <Col sm={8}>
           <AlbumsList
             albums={albums}
             loading={loading}

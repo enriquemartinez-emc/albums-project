@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { IAlbum } from "../types";
 
@@ -14,6 +14,10 @@ export default function AlbumDetails({
   editAlbum,
 }: AlbumDetailsProps) {
   const [album, setAlbum] = useState<IAlbum>({ ...selectedAlbum });
+
+  useEffect(() => {
+    setAlbum({ ...selectedAlbum });
+  }, [selectedAlbum]);
 
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

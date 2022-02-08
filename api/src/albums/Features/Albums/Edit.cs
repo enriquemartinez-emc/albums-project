@@ -38,7 +38,8 @@ namespace albums.Features.Albums
 
             public async Task<AlbumResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var album = await _context.Albums.FindAsync(request.id, cancellationToken);
+                var album = await _context.Albums
+                    .FirstOrDefaultAsync(x => x.Id == request.id, cancellationToken);
 
                 if (album == null)
                 {

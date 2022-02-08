@@ -6,7 +6,13 @@ export default function useAlbums() {
   const [albums, setAlbums] = useState<IAlbum[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedAlbum, setSelectedAlbum] = useState<IAlbum>({} as IAlbum);
+  const [selectedAlbum, setSelectedAlbum] = useState<IAlbum>({
+    id: null,
+    name: "",
+    description: "",
+    artistName: "",
+    coverUrl: "",
+  });
 
   async function fetchAlbums() {
     try {
@@ -36,7 +42,7 @@ export default function useAlbums() {
 
   async function editAlbum(album: IAlbum) {
     try {
-      const { data } = await AlbumService.update(album.id, album);
+      const { data } = await AlbumService.update(album.id!, album);
       setAlbums(data.album);
     } catch (error: any) {
       setError(error);

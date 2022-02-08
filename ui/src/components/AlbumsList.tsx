@@ -21,9 +21,7 @@ export default function AlbumsList({
     <table className="table table-striped" aria-labelledby="tabelLabel">
       <thead>
         <tr>
-          <th>Cover</th>
-          <th>Album Name</th>
-          <th>Artist Name</th>
+          <th>Album</th>
           <th>Description</th>
           <th></th>
         </tr>
@@ -31,14 +29,28 @@ export default function AlbumsList({
       <tbody>
         {albums.map((album: IAlbum) => (
           <tr key={album.id}>
-            <td>{album.coverUrl}</td>
-            <td>{album.name}</td>
-            <td>{album.artistName}</td>
-            <td>{album.description}</td>
             <td>
-              <Button color="primary" onClick={() => selectAlbum(album)}>
-                <i className="bi-pencil-square"></i>
-              </Button>
+              <div className="p-2 d-flex flex-row align-items-center mb-2">
+                <img
+                  src={album.coverUrl}
+                  width="60"
+                  className="rounded-circle"
+                />
+                <div className="d-flex flex-column ml-2">
+                  <span className="d-block font-weight-bold">{album.name}</span>
+                  <small className="text-muted">{album.artistName}</small>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div className="p-2 d-flex flex-column">{album.description}</div>
+            </td>
+            <td>
+              <div className="p-2">
+                <Button color="primary" onClick={() => selectAlbum(album)}>
+                  Edit
+                </Button>
+              </div>
             </td>
           </tr>
         ))}
