@@ -9,8 +9,8 @@ const get = (id: string) => {
   return http.get(`/albums/${id}`);
 };
 
-const create = (data: IAlbum) => {
-  return http.post("/albums", { data });
+const create = (album: IAlbum) => {
+  return http.post("/albums", album);
 };
 
 const update = (id: string, album: IAlbum) => {

@@ -38,12 +38,14 @@ namespace albums.Features.Albums
             {
                 var album = new Album()
                 {
+                    Id = new Guid(),
                     Name = request.Name,
                     Description = request.Description,
                     CoverUrl = request.CoverUrl,
                     ArtistName = request.ArtistName
                 };
 
+                await _context.Albums.AddAsync(album);
                 await _context.SaveChangesAsync(cancellationToken);
 
                 return new AlbumResponse(album);

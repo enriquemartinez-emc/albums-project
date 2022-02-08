@@ -14,7 +14,7 @@ export default function useAlbums() {
   const [albums, setAlbums] = useState<IAlbum[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedAlbum, setSelectedAlbum] = useState(initialAlbum);
+  const [selectedAlbum, setSelectedAlbum] = useState<IAlbum>(initialAlbum);
 
   async function fetchAlbums() {
     try {
@@ -47,7 +47,6 @@ export default function useAlbums() {
       const index = albums.findIndex((a) => a.id === data.album.id);
       albums[index] = data.album;
       setAlbums([...albums]);
-      setSelectedAlbum(initialAlbum);
     } catch (error: any) {
       setError(error);
       console.log(error);
