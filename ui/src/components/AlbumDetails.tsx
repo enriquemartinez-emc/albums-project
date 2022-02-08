@@ -28,8 +28,10 @@ export default function AlbumDetails({
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    console.log(album);
-    if (album && album.id) {
+
+    if (album.name === "") return;
+
+    if (album.id) {
       editAlbum(album);
     } else {
       addAlbum(album);

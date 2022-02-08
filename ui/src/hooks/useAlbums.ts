@@ -2,17 +2,19 @@ import { useState } from "react";
 import AlbumService from "../api/album-service";
 import { IAlbum } from "../types";
 
+const initialAlbum: IAlbum = {
+  id: null,
+  name: "",
+  description: "",
+  artistName: "",
+  coverUrl: "",
+};
+
 export default function useAlbums() {
   const [albums, setAlbums] = useState<IAlbum[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedAlbum, setSelectedAlbum] = useState<IAlbum>({
-    id: null,
-    name: "",
-    description: "",
-    artistName: "",
-    coverUrl: "",
-  });
+  const [selectedAlbum, setSelectedAlbum] = useState(initialAlbum);
 
   async function fetchAlbums() {
     try {
@@ -20,7 +22,6 @@ export default function useAlbums() {
       setAlbums(data.albums);
     } catch (error: any) {
       setError(error);
-      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -43,7 +44,10 @@ export default function useAlbums() {
   async function editAlbum(album: IAlbum) {
     try {
       const { data } = await AlbumService.update(album.id!, album);
-      setAlbums(data.album);
+      const index = albums.findIndex((a) => a.id === data.album.id);
+      albums[index] = data.album;
+      setAlbums([...albums]);
+      setSelectedAlbum(initialAlbum);
     } catch (error: any) {
       setError(error);
       console.log(error);
